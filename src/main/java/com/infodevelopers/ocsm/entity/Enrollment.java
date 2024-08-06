@@ -13,7 +13,8 @@ import java.util.Date;
 @Builder
 
 @Entity
-@Table(name = "tbl_enrollment")
+@Table(name = "tbl_enrollment" , uniqueConstraints = {
+        @UniqueConstraint(name = "UniqueUserAndCourse", columnNames = {"user_id", "course_id"})})
 public class Enrollment {
     @Id
     @SequenceGenerator(name = "tbl_enrollment_id_sequence", initialValue = 1, sequenceName = "tbl_enrollment_id_sequence")
@@ -31,8 +32,5 @@ public class Enrollment {
     @ManyToOne(targetEntity = Course.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_ENROLLMENT_COURSE"))
     private Course course;
-
-
-
 
 }

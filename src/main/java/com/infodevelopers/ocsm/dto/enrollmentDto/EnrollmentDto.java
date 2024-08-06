@@ -15,9 +15,7 @@ public class EnrollmentDto {
 
     private Date enrolledAt;
 
-    private String userName;
-
-    private String role;
+    private String mobileNumber;
 
     private String course;
 

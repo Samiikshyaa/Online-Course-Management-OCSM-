@@ -28,12 +28,22 @@ public class EnrollmentController extends BaseController {
     }
 
     @GetMapping("/enrollmentList")
-    public ResponseEntity<GlobalApiResponse> findAllEnrollment(EnrollmentDto enrollmentDto){
+    public ResponseEntity<GlobalApiResponse> findAllEnrollment(){
         List<EnrollmentDto> enrollmentDtoList =  enrollmentService.findAll();
         if (enrollmentDtoList != null){
             return new ResponseEntity<>(successResponse("Enrollment Started successfully",enrollmentDtoList), HttpStatus.OK);
         }else {
             return new ResponseEntity<>(failureResponse("Enrollment failed",null),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/MyEnrollments")
+    public ResponseEntity<GlobalApiResponse> findEnrollmentsByStudent(@RequestParam(value = "mobileNumber", required = false) String mobileNumber){
+        List<EnrollmentDto> enrollmentDtoList = enrollmentService.findByMobileNumber(mobileNumber);
+        if (enrollmentDtoList != null){
+            return new ResponseEntity<>(successResponse("Enrollment List fetched successfully",enrollmentDtoList), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(failureResponse("Fetching enrollments failed",null),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

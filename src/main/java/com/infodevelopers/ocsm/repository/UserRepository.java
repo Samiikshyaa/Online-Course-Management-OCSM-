@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
 
@@ -14,6 +15,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query(value = "select * from tbl_user where user_name in(?1)", nativeQuery = true)
     List<User> findByAllUserName(List<String> username);
 
-    @Query(value = "SELECT * from tbl_user u INNER JOIN user_role ur on u.id = ur.user_id where ur.role_id = 2 and u.user_name = 'samikshya'",nativeQuery = true)
-    User findStudentByUserName(String username, String role);
+    @Query(value = "SELECT * from tbl_user where mobile_number = ?1", nativeQuery = true)
+    Optional<User> findUserByMobileNumber(String phone);
 }
