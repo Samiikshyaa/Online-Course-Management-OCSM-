@@ -8,5 +8,5 @@ import java.util.List;
 public interface EnrollmentService extends GenericService<EnrollmentDto> {
     List<EnrollmentDto> findByMobileNumber(String mobileNumber);
 
-    List<EnrollmentDto> findByUserName(String userName);
+//    List<EnrollmentDto> findByUserName(String userName);
 }

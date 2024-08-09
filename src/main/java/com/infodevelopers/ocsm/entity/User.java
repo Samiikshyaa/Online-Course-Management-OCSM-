@@ -34,7 +34,7 @@ public class User implements Serializable {
     @Column(name = "mobile_number", length = 10)
     private String mobileNumber;
 
-    @OneToMany(targetEntity = Role.class, fetch = FetchType.LAZY)
+    @ManyToMany(targetEntity = Role.class, fetch = FetchType.LAZY)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_ROLE_USER_ID")),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_ROLE_ROLE_ID")),
             uniqueConstraints = @UniqueConstraint(name = "user_role_unique", columnNames = {"user_id", "role_id"}))

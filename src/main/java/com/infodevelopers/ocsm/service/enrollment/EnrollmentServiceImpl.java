@@ -98,7 +98,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
                     dtoList.add(EnrollmentDto.builder()
                             .id(data.getId())
                             .enrolledAt(data.getEnrolledAt())
-                            .mobileNumber(data.getUser().getUserName())
+                            .mobileNumber(data.getUser().getMobileNumber())
                             .course(data.getCourse().getCourseName())
                             .description(data.getCourse().getDescription())
                             .build());
@@ -106,8 +106,4 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         return dtoList;
     }
 
-    @Override
-    public List<EnrollmentDto> findByUserName(String userName) {
-        return null;
-    }
 }

@@ -5,4 +5,7 @@ import com.infodevelopers.ocsm.service.GenericService;
 
 public interface CourseService extends GenericService<CourseDto> {
 
+    boolean findById(Integer id);
+
+
 }

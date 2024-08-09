@@ -1,0 +1,13 @@
+Data Types: 
+byte short int long float double char 
+
+Static: inside class. it can be initialized as well as has default values. shared among the instances of the classes
+Local: inside the method, constructor or the block of the code. It has to be initialized before using. It is used inside the method, block of the code.
+Instance: inside the class. can be accessible by the objects. It has default values
+
+Instance, Static have default values.
+Local do not have default values.
+   
+
+\n \"\"
+

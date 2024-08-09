@@ -17,4 +17,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query(value = "SELECT * from tbl_user where mobile_number = ?1", nativeQuery = true)
     Optional<User> findUserByMobileNumber(String phone);
+
+//    Optional<User> findByUserName(String username);
 }

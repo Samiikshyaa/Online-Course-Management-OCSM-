@@ -20,9 +20,12 @@ public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
 
+//    private final PasswordEncoder passwordEncoder;
+
     public UserServiceImpl(RoleRepository roleRepository, UserRepository userRepository) {
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
+//        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -40,6 +43,9 @@ public class UserServiceImpl implements UserService {
                 log.info("{} role not found", data);
             }
         });
+
+//        String hashedPassword = passwordEncoder.encode(userDto.getPassword());
+//        log.info("Hashed Password is : {}",hashedPassword);
         User user = User.builder()
                 .id(userDto.getId())
                 .userName(userDto.getUserName())

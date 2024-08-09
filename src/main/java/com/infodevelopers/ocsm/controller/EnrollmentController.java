@@ -18,32 +18,32 @@ public class EnrollmentController extends BaseController {
     private EnrollmentService enrollmentService;
 
     @PostMapping("/enroll")
-    public ResponseEntity<GlobalApiResponse> createEnrollment(@RequestBody EnrollmentDto enrollmentDto){
+    public ResponseEntity<GlobalApiResponse> createEnrollment(@RequestBody EnrollmentDto enrollmentDto) {
         EnrollmentDto dto = enrollmentService.create(enrollmentDto);
-        if (dto != null){
-            return new ResponseEntity<>(successResponse("Enrollment Started successfully",enrollmentDto), HttpStatus.OK);
-        }else {
-            return new ResponseEntity<>(failureResponse("Enrollment failed",null),HttpStatus.INTERNAL_SERVER_ERROR);
+        if (dto != null) {
+            return new ResponseEntity<>(successResponse("Enrollment Started successfully", enrollmentDto), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(failureResponse("Enrollment failed", null), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("/enrollmentList")
-    public ResponseEntity<GlobalApiResponse> findAllEnrollment(){
-        List<EnrollmentDto> enrollmentDtoList =  enrollmentService.findAll();
-        if (enrollmentDtoList != null){
-            return new ResponseEntity<>(successResponse("Enrollment Started successfully",enrollmentDtoList), HttpStatus.OK);
-        }else {
-            return new ResponseEntity<>(failureResponse("Enrollment failed",null),HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<GlobalApiResponse> findAllEnrollment() {
+        List<EnrollmentDto> enrollmentDtoList = enrollmentService.findAll();
+        if (enrollmentDtoList != null) {
+            return new ResponseEntity<>(successResponse("Enrollments fetched successfully", enrollmentDtoList), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(failureResponse("Enrollment fetch failed", null), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @GetMapping("/MyEnrollments")
-    public ResponseEntity<GlobalApiResponse> findEnrollmentsByStudent(@RequestParam(value = "mobileNumber", required = false) String mobileNumber){
+    @GetMapping("/myEnrollments")
+    public ResponseEntity<GlobalApiResponse> findEnrollmentsByStudent(@RequestParam(value = "mobileNumber", required = false) String mobileNumber) {
         List<EnrollmentDto> enrollmentDtoList = enrollmentService.findByMobileNumber(mobileNumber);
-        if (enrollmentDtoList != null){
-            return new ResponseEntity<>(successResponse("Enrollment List fetched successfully",enrollmentDtoList), HttpStatus.OK);
+        if (enrollmentDtoList != null) {
+            return new ResponseEntity<>(successResponse("Enrollments fetched successfully", enrollmentDtoList), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(failureResponse("Fetching enrollments failed",null),HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(failureResponse("Enrollment fetch failed", null), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
