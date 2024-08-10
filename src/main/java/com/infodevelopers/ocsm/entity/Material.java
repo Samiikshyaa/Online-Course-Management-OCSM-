@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Builder
 
 @Entity
-@Table(name = "tbl_material")
+@Table(name = "tbl_material", uniqueConstraints = @UniqueConstraint(name = "Unique_constraints_id_title", columnNames = {"title", "course_id"}))
 public class Material implements Serializable {
     @Id
     @SequenceGenerator(name = "tbl_material_id_sequence", allocationSize = 1, sequenceName = "tbl_material_id_sequence")

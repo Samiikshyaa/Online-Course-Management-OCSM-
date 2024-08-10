@@ -1,0 +1,29 @@
+
+PS C:\Users\Asus> docker ps
+CONTAINER ID   IMAGE      COMMAND                  CREATED       STATUS       PORTS                    NAMES
+4545c9e80050   postgres   "docker-entrypoint.s…"   3 hours ago   Up 3 hours   0.0.0.0:5433->5432/tcp   wallet
+PS C:\Users\Asus> docker exec -it wallet bash
+root@4545c9e80050:/# psql -U myuser
+psql: error: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  database "myuser" does not exist
+root@4545c9e80050:/# psql -U postgres
+psql: error: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  role "postgres" does not exist
+root@4545c9e80050:/# psql -U myuser
+psql: error: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  database "myuser" does not exist
+root@4545c9e80050:/# psql -U myuser wallet
+psql (16.3 (Debian 16.3-1.pgdg120+1))
+Type "help" for help.
+
+wallet=# \l
+                                                   List of databases
+   Name    | Owner  | Encoding | Locale Provider |  Collate   |   Ctype    | ICU Locale | ICU Rules | Access privileges
+-----------+--------+----------+-----------------+------------+------------+------------+-----------+-------------------
+ postgres  | myuser | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           |
+ template0 | myuser | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           | =c/myuser        +
+           |        |          |                 |            |            |            |           | myuser=CTc/myuser
+ template1 | myuser | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           | =c/myuser        +
+           |        |          |                 |            |            |            |           | myuser=CTc/myuser
+ wallet    | myuser | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           |
+(4 rows)
+
+wallet=# CREATE DATABASE testdb;
+CREATE DATABASE
