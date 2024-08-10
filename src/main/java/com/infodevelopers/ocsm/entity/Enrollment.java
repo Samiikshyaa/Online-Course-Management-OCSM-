@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @NoArgsConstructor
@@ -15,7 +16,7 @@ import java.util.Date;
 @Entity
 @Table(name = "tbl_enrollment" , uniqueConstraints = {
         @UniqueConstraint(name = "UniqueUserAndCourse", columnNames = {"user_id", "course_id"})})
-public class Enrollment {
+public class Enrollment implements Serializable {
     @Id
     @SequenceGenerator(name = "tbl_enrollment_id_sequence", initialValue = 1, sequenceName = "tbl_enrollment_id_sequence")
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
