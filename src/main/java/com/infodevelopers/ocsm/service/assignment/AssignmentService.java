@@ -6,7 +6,10 @@ import com.infodevelopers.ocsm.service.GenericService;
 import java.util.List;
 
 public interface AssignmentService extends GenericService<AssignmentDto> {
+
     List<AssignmentDto> assignmentOfParticularCourse(Integer id);
+
+    boolean findById(Integer id);
 
 //    AssignmentDto createAssignment(AssignmentDto assignmentDto, MultipartFile file);
 }

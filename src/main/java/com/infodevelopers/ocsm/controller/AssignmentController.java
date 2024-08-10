@@ -34,8 +34,18 @@ public class AssignmentController extends BaseController {
         }
     }
 
+    @PutMapping("/update")
+    public ResponseEntity<GlobalApiResponse> updateAssignment(@ModelAttribute AssignmentDto assignmentDto) {
+        AssignmentDto dto = assignmentService.update(assignmentDto);
+        if (dto != null) {
+            return new ResponseEntity<>(successResponse("Assignment Created Successfully", dto), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(failureResponse("Assignment Creation failed", null), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
-    @GetMapping("/assignments/ofCourse/{courseId}")
+
+    @GetMapping("/assignmentList/ofCourse/{courseId}")
     public ResponseEntity<GlobalApiResponse> getAssignmentOfTheCourse(@PathVariable("courseId") Integer courseId) {
         List<AssignmentDto> assignmentDto = assignmentService.assignmentOfParticularCourse(courseId);
         if (assignmentDto != null) {
@@ -44,4 +54,26 @@ public class AssignmentController extends BaseController {
             return new ResponseEntity<>(failureResponse("Assignment fetch failed", null), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/assignmentList")
+    public ResponseEntity<GlobalApiResponse> getAssignments() {
+        List<AssignmentDto> assignmentDto = assignmentService.findAll();
+        if (assignmentDto != null) {
+            return new ResponseEntity<>(successResponse("Assignment fetched Successfully", assignmentDto), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(failureResponse("Assignment fetch failed", null), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/deleteAssignment/{assignmentId}")
+    public ResponseEntity<GlobalApiResponse> deleteAssignment(@PathVariable("assignmentId") Integer id){
+        assignmentService.deleteById(id);
+        boolean flag = assignmentService.findById(id);
+        if (flag == true){
+            return new ResponseEntity<>(successResponse("Course deleted successfully",id),HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(failureResponse("Course still exists",id),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
