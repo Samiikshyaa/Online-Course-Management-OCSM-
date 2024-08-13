@@ -1,8 +1,8 @@
-package com.infodevelopers.ocsm.dto.assignmentDto;
+package com.infodevelopers.ocsm.dto.submissionDto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.infodevelopers.ocsm.entity.Assignment;
+import com.infodevelopers.ocsm.entity.User;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,21 +14,15 @@ import java.util.Date;
 @Getter
 @Setter
 @Builder
-public class AssignmentDto {
 
+public class SubmissionDto {
     private Integer id;
-
-    private String title;
-
-    private String description;
-
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date dueDate;
-
+    private Date submissionDate;
+    private String grade;
+    private Integer assignmentId;
+    private Integer userId;
     private String filePath;
-
-    private Integer courseId;
-
     @JsonIgnore
     private MultipartFile file;
 }

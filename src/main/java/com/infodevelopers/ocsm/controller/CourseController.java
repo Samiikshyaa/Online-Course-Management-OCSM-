@@ -20,7 +20,7 @@ public class CourseController extends BaseController {
 
 
     @PostMapping("/create")
-    public ResponseEntity<GlobalApiResponse> createCourse(@RequestBody CourseDto courseDto) {
+    public ResponseEntity<GlobalApiResponse> createCourse(@RequestBody CourseDto courseDto) throws Exception {
         CourseDto course = courseService.create(courseDto);
         if (course != null) {
             return new ResponseEntity<>(successResponse("Course Created successfully", courseDto), HttpStatus.OK);

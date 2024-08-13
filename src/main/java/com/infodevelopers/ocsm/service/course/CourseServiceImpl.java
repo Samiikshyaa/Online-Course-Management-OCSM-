@@ -44,7 +44,6 @@ public class CourseServiceImpl implements CourseService{
     @Override
     public void deleteById(Integer id) {
         courseRepository.deleteById(id);
-
     }
 
     @Override
@@ -77,12 +76,11 @@ public class CourseServiceImpl implements CourseService{
         existingCourse.setCourseName(courseDto.getCourseName());
         existingCourse.setDescription(courseDto.getDescription());
         existingCourse.setSchedule(courseDto.getSchedule());
+//        existingCourse.setInstructors(courseDto.getInstructors());
+//        needed in userType but we have String type LIST.
 
         List<User> updatedInstructors = userRepository.findByAllUserName(courseDto.getInstructors());
         existingCourse.setInstructors(updatedInstructors);
-
-//        existingCourse.setInstructors(courseDto.getInstructors());
-////        needed in userType but we have String type LIST.
 
         Course course = courseRepository.save(existingCourse);
 

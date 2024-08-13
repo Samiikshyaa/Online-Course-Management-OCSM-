@@ -14,16 +14,14 @@ import java.util.List;
 @RequestMapping("/assignment")
 public class AssignmentController extends BaseController {
     private final AssignmentService assignmentService;
-    private final FileStorageService fileStorageService;
 
-    public AssignmentController(AssignmentService assignmentService, FileStorageService fileStorageService) {
+    public AssignmentController(AssignmentService assignmentService) {
         this.assignmentService = assignmentService;
-        this.fileStorageService = fileStorageService;
     }
 
 
     @PostMapping("/create")
-    public ResponseEntity<GlobalApiResponse> createAssignment(@ModelAttribute AssignmentDto assignmentDto) {
+    public ResponseEntity<GlobalApiResponse> createAssignment(@ModelAttribute AssignmentDto assignmentDto) throws Exception {
 
         AssignmentDto dto = assignmentService.create(assignmentDto);
 

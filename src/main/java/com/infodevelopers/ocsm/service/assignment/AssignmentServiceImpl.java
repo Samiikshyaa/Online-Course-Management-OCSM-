@@ -36,8 +36,8 @@ public class AssignmentServiceImpl implements AssignmentService {
     @Override
     public AssignmentDto create(AssignmentDto assignmentDto) {
         Optional<Course> optionalCourse = courseRepository.findById(assignmentDto.getCourseId());
-        String filePath = fileStorageService.storeFile(assignmentDto.getFile());
         if (optionalCourse.isPresent()) {
+        String filePath = fileStorageService.storeFile(assignmentDto.getFile());
             Course course = optionalCourse.get();
             Assignment assignment = Assignment.builder()
                     .title(assignmentDto.getTitle())
@@ -63,6 +63,7 @@ public class AssignmentServiceImpl implements AssignmentService {
 
     @Override
     public List<AssignmentDto> findAll() {
+        //Use projection
         List<AssignmentDto> allAssignments = new ArrayList<>();
         assignmentRepository.findAll().stream().forEach(assignment -> {
             AssignmentDto dto = AssignmentDto.builder()
@@ -81,7 +82,6 @@ public class AssignmentServiceImpl implements AssignmentService {
     public AssignmentDto update(AssignmentDto assignmentDto) {
         Optional<Assignment> optionalAssignment = assignmentRepository.findById(assignmentDto.getId());
         Assignment existingAssignment = optionalAssignment.get();
-        existingAssignment.setId(assignmentDto.getId());
         existingAssignment.setTitle(assignmentDto.getTitle());
         existingAssignment.setDescription(assignmentDto.getDescription());
         existingAssignment.setDueDate(assignmentDto.getDueDate());

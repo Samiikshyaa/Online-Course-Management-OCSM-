@@ -11,6 +11,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/material")
 public class MaterialController extends BaseController{
@@ -24,7 +26,7 @@ public class MaterialController extends BaseController{
     }
 
     @PostMapping("/create")
-    public ResponseEntity<GlobalApiResponse> createMaterial(@ModelAttribute MaterialDto materialDto){
+    public ResponseEntity<GlobalApiResponse> createMaterial(@ModelAttribute MaterialDto materialDto) throws Exception {
         MaterialDto dto = materialService.create(materialDto);
 
         if(dto != null){
@@ -33,19 +35,6 @@ public class MaterialController extends BaseController{
             return new ResponseEntity<>(failureResponse("Material Creation failed",null), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-//    @GetMapping("/download/{fileName:.+}")
-//    public ResponseEntity<GlobalApiResponse> downloadMaterial(@PathVariable String fileName) {
-//        Resource resource = fileStorageService.loadFileAsResource(fileName);
-//
-//        if (resource != null && resource.exists()) {
-//            return ResponseEntity.ok()
-//                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-//                    .body(successResponse("File downloaded successfully", resource));
-//        } else {
-//            return new ResponseEntity<>(failureResponse("File not found", null), HttpStatus.NOT_FOUND);
-//        }
-//    }
 
     @GetMapping("/download/{fileName:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName) {
@@ -64,5 +53,46 @@ public class MaterialController extends BaseController{
         }
     }
 
+    @GetMapping("/materialList")
+    public ResponseEntity<GlobalApiResponse> allMaterial(){
+       List<MaterialDto> materialDtos = materialService.findAll();
 
+        if(materialDtos != null){
+            return new ResponseEntity<>(successResponse("Material Created Successfully",materialDtos), HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(failureResponse("Material Creation failed",null), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/materialList/{courseId}")
+    public ResponseEntity<GlobalApiResponse> materialByCourseId(@PathVariable("courseId")Integer id){
+        List<MaterialDto> materialDtos = materialService.materialListByCourseId(id);
+
+        if(materialDtos != null){
+            return new ResponseEntity<>(successResponse("Material Created Successfully",materialDtos), HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(failureResponse("Material Creation failed",null), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/deleteMaterial/{materialId}")
+    public ResponseEntity<GlobalApiResponse> deleteMaterial(@PathVariable("materialId") Integer id){
+        materialService.deleteById(id);
+        boolean flag = materialService.findByMaterialId(id);
+        if (flag == true){
+            return new ResponseEntity<>(successResponse("Material deleted successfully",id),HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(failureResponse("Material still exists",id),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping ("/updateMaterial")
+    public ResponseEntity<GlobalApiResponse> updateMaterial(@ModelAttribute MaterialDto materialDto){
+        MaterialDto dto = materialService.update(materialDto);
+        if (dto != null){
+            return new ResponseEntity<>(successResponse("Material updated successfully",dto),HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(failureResponse("Material update failed",null),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

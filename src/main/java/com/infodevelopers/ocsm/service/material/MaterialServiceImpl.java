@@ -6,12 +6,15 @@ import com.infodevelopers.ocsm.entity.Material;
 import com.infodevelopers.ocsm.repository.CourseRepository;
 import com.infodevelopers.ocsm.repository.MaterialRepository;
 import com.infodevelopers.ocsm.service.FileStorageService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class MaterialServiceImpl implements MaterialService {
     private final CourseRepository courseRepository;
     private final FileStorageService fileStorageService;
@@ -47,16 +50,70 @@ public class MaterialServiceImpl implements MaterialService {
 
     @Override
     public void deleteById(Integer id) {
-
+        materialRepository.deleteById(id);
     }
 
     @Override
     public List<MaterialDto> findAll() {
-        return null;
+        List<MaterialDto> materialDtoList = new ArrayList<>();
+
+        materialRepository.findAll().stream().forEach(material -> {
+            materialDtoList.add(MaterialDto.builder()
+                    .id(material.getId())
+                    .title(material.getTitle())
+                    .content(material.getContent())
+                    .materialPath(material.getMaterialPath())
+                    .courseId(material.getCourse().getId())
+                    .build());
+        });
+        return materialDtoList;
     }
 
     @Override
     public MaterialDto update(MaterialDto materialDto) {
-        return null;
+        Optional<Material> existingMaterial = materialRepository.findById(materialDto.getId());
+        Material material = existingMaterial.get();
+        String filePath = fileStorageService.storeFile(materialDto.getFile());
+        if(material!= null){
+            material.setTitle(materialDto.getTitle());
+            material.setContent(materialDto.getContent());
+            material.setMaterialPath(filePath);
+            Optional<Course> course = courseRepository.findById(materialDto.getCourseId());
+            Course c = course.get();
+            if (c != null){
+                material.setCourse(c);
+            }else {
+                log.error("Course with id: {} not found ",materialDto.getCourseId());
+            }
+        }
+        materialRepository.save(material);
+        return materialDto;
+    }
+
+    @Override
+    public List<MaterialDto> materialListByCourseId(Integer courseId) {
+        List<MaterialDto> materialDtoList = new ArrayList<>();
+        materialRepository.findByCourse_Id(courseId).stream().forEach(material -> {
+            materialDtoList.add(MaterialDto.builder()
+                    .id(material.getId())
+                    .title(material.getTitle())
+                    .content(material.getContent())
+                    .materialPath(material.getMaterialPath())
+                    .courseId(material.getCourse().getId())
+                    .build());
+        });
+        return materialDtoList;
+    }
+
+    @Override
+    public boolean findByMaterialId(Integer id) {
+        Optional<Material> material = materialRepository.findById(id);
+
+        if (material.isPresent()){
+            return false;
+        } else{
+            return true;
+        }
+
     }
 }

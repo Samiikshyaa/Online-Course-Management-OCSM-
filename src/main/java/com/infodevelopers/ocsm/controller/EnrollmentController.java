@@ -18,7 +18,7 @@ public class EnrollmentController extends BaseController {
     private EnrollmentService enrollmentService;
 
     @PostMapping("/enroll")
-    public ResponseEntity<GlobalApiResponse> createEnrollment(@RequestBody EnrollmentDto enrollmentDto) {
+    public ResponseEntity<GlobalApiResponse> createEnrollment(@RequestBody EnrollmentDto enrollmentDto) throws Exception {
         EnrollmentDto dto = enrollmentService.create(enrollmentDto);
         if (dto != null) {
             return new ResponseEntity<>(successResponse("Enrollment Started successfully", enrollmentDto), HttpStatus.OK);

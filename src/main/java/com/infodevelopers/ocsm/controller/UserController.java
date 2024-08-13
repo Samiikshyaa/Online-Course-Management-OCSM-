@@ -19,7 +19,7 @@ public class UserController extends BaseController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<GlobalApiResponse> signup(@RequestBody UserDto userDto){
+    public ResponseEntity<GlobalApiResponse> signup(@RequestBody UserDto userDto) throws Exception {
         UserDto u = userService.create(userDto);
         if(u!= null){
             return new ResponseEntity<>(successResponse("User Created",userDto), HttpStatus.OK);
