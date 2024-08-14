@@ -1,0 +1,18 @@
+services:
+  springboot-app:
+    image: ocsm-image
+    container_name: onlinecoursemngt-app
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/onlinecourse
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    build: .
+    volumes:
+      - ./uploads/files:/uploads/files
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+networks:
+  app-network:
+    external: true
