@@ -115,25 +115,25 @@ public class AssignmentServiceImpl implements AssignmentService {
 
     @Override
     public List<AssignmentDto> assignmentOfParticularCourse(Integer id) {
-        List<AssignmentDto> assignedTasks = new ArrayList<>();
-        Optional<List<Assignment>> optionalAssignments = assignmentRepository.findByCourseId(id);
-        List<Assignment> assignments = optionalAssignments.get();
-        if (assignments.size() != 0) {
-            assignments.stream().forEach(assignment -> {
-                AssignmentDto assignmentdto = AssignmentDto.builder()
-                        .id(assignment.getId())
-                        .title(assignment.getTitle())
-                        .dueDate(assignment.getDueDate())
-                        .courseId(assignment.getCourse().getId())
-                        .description(assignment.getDescription())
-                        .filePath(assignment.getAssigmentPath())
-                        .build();
-                assignedTasks.add(assignmentdto);
-            });
-            return assignedTasks;
-        } else {
-            return null;
-        }
+//        List<AssignmentDto> assignedTasks = new ArrayList<>();
+//        Optional<List<Assignment>> optionalAssignments = assignmentRepository.findByCourseId(id);
+//        List<Assignment> assignments = optionalAssignments.get();
+//        if (assignments.size() != 0) {
+//            assignments.stream().forEach(assignment -> {
+//                AssignmentDto assignmentdto = AssignmentDto.builder()
+//                        .id(assignment.getId())
+//                        .title(assignment.getTitle())
+//                        .dueDate(assignment.getDueDate())
+//                        .courseId(assignment.getCourse().getId())
+//                        .description(assignment.getDescription())
+//                        .filePath(assignment.getAssigmentPath())
+//                        .build();
+//                assignedTasks.add(assignmentdto);
+//            });
+//            return assignedTasks;
+//        } else {
+//            return null;
+//        }
     }
 
 
