@@ -9,8 +9,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @Builder

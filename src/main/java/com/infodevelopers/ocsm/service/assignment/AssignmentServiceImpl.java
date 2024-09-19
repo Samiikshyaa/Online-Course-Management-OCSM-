@@ -1,10 +1,9 @@
 package com.infodevelopers.ocsm.service.assignment;
 
 import com.infodevelopers.ocsm.dto.assignmentDto.AssignmentDto;
-import com.infodevelopers.ocsm.dto.courseDto.CourseDto;
 import com.infodevelopers.ocsm.entity.Assignment;
 import com.infodevelopers.ocsm.entity.Course;
-import com.infodevelopers.ocsm.entity.User;
+import com.infodevelopers.ocsm.mapper.AssignmentMapper;
 import com.infodevelopers.ocsm.repository.AssignmentRepository;
 import com.infodevelopers.ocsm.repository.CourseRepository;
 import com.infodevelopers.ocsm.service.FileStorageService;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -26,10 +24,13 @@ public class AssignmentServiceImpl implements AssignmentService {
 
     private final FileStorageService fileStorageService;
 
-    public AssignmentServiceImpl(CourseRepository courseRepository, AssignmentRepository assignmentRepository, FileStorageService fileStorageService) {
+    private final AssignmentMapper assignmentMapper;
+
+    public AssignmentServiceImpl(CourseRepository courseRepository, AssignmentRepository assignmentRepository, FileStorageService fileStorageService, AssignmentMapper assignmentMapper) {
         this.courseRepository = courseRepository;
         this.assignmentRepository = assignmentRepository;
         this.fileStorageService = fileStorageService;
+        this.assignmentMapper = assignmentMapper;
     }
 
 
@@ -133,6 +134,9 @@ public class AssignmentServiceImpl implements AssignmentService {
 //            return assignedTasks;
 //        } else {
 //            return null;
+
+        
+            return assignmentMapper.findById(id);
 //        }
     }
 
