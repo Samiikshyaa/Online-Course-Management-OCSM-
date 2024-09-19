@@ -2,6 +2,7 @@ package com.infodevelopers.ocsm.controller;
 
 import com.infodevelopers.ocsm.dto.GlobalApiResponse;
 import com.infodevelopers.ocsm.dto.assignmentDto.AssignmentDto;
+import com.infodevelopers.ocsm.dto.assignmentDto.AssignmentResponseDto;
 import com.infodevelopers.ocsm.service.FileStorageService;
 import com.infodevelopers.ocsm.service.assignment.AssignmentService;
 import org.springframework.http.HttpStatus;
@@ -45,7 +46,7 @@ public class AssignmentController extends BaseController {
 
     @GetMapping("/assignmentList/ofCourse/{courseId}")
     public ResponseEntity<GlobalApiResponse> getAssignmentOfTheCourse(@PathVariable("courseId") Integer courseId) {
-        List<AssignmentDto> assignmentDto = assignmentService.assignmentOfParticularCourse(courseId);
+        List<AssignmentResponseDto> assignmentDto = assignmentService.assignmentOfParticularCourse(courseId);
         if (assignmentDto != null) {
             return new ResponseEntity<>(successResponse("Assignment fetched Successfully", assignmentDto), HttpStatus.OK);
         } else {

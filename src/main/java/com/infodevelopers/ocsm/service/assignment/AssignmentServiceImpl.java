@@ -1,6 +1,7 @@
 package com.infodevelopers.ocsm.service.assignment;
 
 import com.infodevelopers.ocsm.dto.assignmentDto.AssignmentDto;
+import com.infodevelopers.ocsm.dto.assignmentDto.AssignmentResponseDto;
 import com.infodevelopers.ocsm.entity.Assignment;
 import com.infodevelopers.ocsm.entity.Course;
 import com.infodevelopers.ocsm.mapper.AssignmentMapper;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -115,7 +117,7 @@ public class AssignmentServiceImpl implements AssignmentService {
     }
 
     @Override
-    public List<AssignmentDto> assignmentOfParticularCourse(Integer id) {
+    public List<AssignmentResponseDto> assignmentOfParticularCourse(Integer id) {
 //        List<AssignmentDto> assignedTasks = new ArrayList<>();
 //        Optional<List<Assignment>> optionalAssignments = assignmentRepository.findByCourseId(id);
 //        List<Assignment> assignments = optionalAssignments.get();
@@ -135,9 +137,22 @@ public class AssignmentServiceImpl implements AssignmentService {
 //        } else {
 //            return null;
 
-        
-            return assignmentMapper.findById(id);
-//        }
+
+//            return assignmentMapper.findById(id);
+        List<Assignment> assignments = assignmentMapper.findById(id);
+        // Log assignments
+        assignments.forEach(a -> System.out.println("Assignment: " + a.toString()));
+
+        return assignments.stream()
+                .map(assignment -> {
+                    AssignmentResponseDto dto = new AssignmentResponseDto();
+                    dto.setId(assignment.getId());
+                    dto.setTitle(assignment.getTitle());
+                    dto.setDescription(assignment.getDescription());
+                    return dto;
+                })
+                .collect(Collectors.toList());
+
     }
 
 
